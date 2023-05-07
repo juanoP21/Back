@@ -1,6 +1,6 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
-const Usuario = require("../models/Usuario");
+const Usuario = require("../models/Usuarios");
 
 const crearUsuario = async (req, res = express.response) => {
   const { name, email, password } = req.body;
