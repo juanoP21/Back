@@ -1,11 +1,11 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const Usuario = require("../models/Usuarios");
-
+const { generateJWT } = require("../helpers/jwt");
 const crearUsuario = async (req, res = express.response) => {
-  const { name, email, password } = req.body;
+  const { name, username, password } = req.body;
   try {
-    let usuario = await Usuario.findOne({ email: email });
+    let usuario = await Usuario.findOne({ username: username });
     if (usuario) {
       return res.status(400).json({
         ok: false,
@@ -31,9 +31,9 @@ const crearUsuario = async (req, res = express.response) => {
 };
 
 const loginUsuario = async (req, res = express.response) => {
-  const { email, password } = req.body;
+  const { username, password } = req.body;
   try {
-    let usuario = await Usuario.findOne({ email: email });
+    let usuario = await Usuario.findOne({ username: username });
     if (!usuario) {
       return res.status(400).json({
         ok: false,
@@ -48,10 +48,11 @@ const loginUsuario = async (req, res = express.response) => {
         msg: "El password No es valido",
       });
     }
-
+    const token = await generateJWT(usuario.id, usuario.username);
     res.status(200).json({
       ok: true,
       usuario,
+      token,
     });
   } catch (error) {
     console.log(error);
@@ -62,10 +63,18 @@ const loginUsuario = async (req, res = express.response) => {
   }
 };
 const revalidarToken = (req, res = express.response) => {
+  const { uid, username } = req;
+  const token = await(generateJWT(uid, username));
   res.json({
     ok: true,
   });
 };
+const obtenerusers = async (req, res = express.response) => {
+
+  
+
+};
+
 
 module.exports = {
   loginUsuario,

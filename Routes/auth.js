@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { check } = require("express-validator");
+const { validarJWT } = require("../middlewares/validar-token");
 const {
   crearUsuario,
   loginUsuario,
@@ -8,7 +9,7 @@ const {
 } = require("../Controllers/auth");
 const { validarCampos } = require("../middlewares/validator-campos");
 
-router.post("/", loginUsuario);
+router.post("/login", loginUsuario);
 
 router.post(
   "/new",
@@ -19,6 +20,14 @@ router.post(
   ],
   crearUsuario
 );
-router.get("/renew", revalidarToken);
+router.get("/renew", validarJWT, revalidarToken);
+
+router.get("/userinfo", validarJWT, (req, res) => {
+  // Obtener el nombre del usuario desde req.name (extraído en el middleware validarJWT)
+  const userName = req.name;
+
+  // Devolver la información del usuario como respuesta
+  res.json({ name: userName });
+});
 
 module.exports = router;

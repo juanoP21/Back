@@ -1,7 +1,7 @@
 const express = require("express");
 require("dotenv").config();
 const { dbConnection } = require("./database/config.js");
-
+const cors = require("cors");
 //Crear express app
 const app = express();
 
@@ -9,7 +9,7 @@ const app = express();
 dbConnection();
 
 app.use(express.static("public"));
-
+app.use(cors());
 const bodyParser = require("body-parser");
 
 // create application/json parser
@@ -17,7 +17,7 @@ const bodyParser = require("body-parser");
 //Rutas
 app.use(bodyParser.json());
 
-app.use("/api/auth", require("./routes/auth"));
+app.use("/api/auth", require("./Routes/auth.js"));
 
 //Escuchar en puerto 4000
 app.listen(process.env.PORT, () => {
