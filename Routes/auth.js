@@ -22,12 +22,4 @@ router.post(
 );
 router.get("/renew", validarJWT, revalidarToken);
 
-router.get("/userinfo", validarJWT, (req, res) => {
-  // Obtener el nombre del usuario desde req.name (extraído en el middleware validarJWT)
-  const userName = req.name;
-
-  // Devolver la información del usuario como respuesta
-  res.json({ name: userName });
-});
-
 module.exports = router;

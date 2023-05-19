@@ -2,6 +2,7 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const Usuario = require("../models/Usuarios");
 const { generateJWT } = require("../helpers/jwt");
+
 const crearUsuario = async (req, res = express.response) => {
   const { name, username, password } = req.body;
   try {
@@ -69,12 +70,6 @@ const revalidarToken = (req, res = express.response) => {
     ok: true,
   });
 };
-const obtenerusers = async (req, res = express.response) => {
-
-  
-
-};
-
 
 module.exports = {
   loginUsuario,
