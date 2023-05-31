@@ -16,6 +16,7 @@ const UsuarioSchema = Schema({
     require: true,
   },
   username: { type: String, require: true, unique: true },
+  phone_number: { type: String, require: true },
 });
 
 module.exports = model("Usuario", UsuarioSchema);

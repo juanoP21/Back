@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const { check } = require("express-validator");
 const { validarJWT } = require("../middlewares/validar-token");
+const Usuario = require("../models/Usuarios");
+
 const {
   crearUsuario,
   loginUsuario,

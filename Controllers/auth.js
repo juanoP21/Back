@@ -4,7 +4,7 @@ const Usuario = require("../models/Usuarios");
 const { generateJWT } = require("../helpers/jwt");
 
 const crearUsuario = async (req, res = express.response) => {
-  const { name, username, password } = req.body;
+  const { name, username, password, lastname, email, phone_number } = req.body;
   try {
     let usuario = await Usuario.findOne({ username: username });
     if (usuario) {
